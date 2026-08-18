@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nakdi Zamanında — Paranın yıllar arası karşılığı</title>
+
+<!-- ===== YAYIN AYARI: aşağıdaki adresi kendi alan adınla değiştir ===== -->
+<link rel="canonical" href="https://nakdizamaninda.com/">
+<meta name="description" content="1965'ten bugüne paranın karşılığı. Bir tarih ve tutar seç, TÜİK enflasyon verisiyle diğer tarihteki değerini gör. Asgari ücret, altın, dolar ve euro karşılaştırmasıyla.">
+<meta name="author" content="Nakdi Zamanında">
+<meta name="robots" content="index,follow">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:site_name" content="Nakdi Zamanında">
+<meta property="og:title" content="Nakdi Zamanında — Paranın yıllar arası karşılığı">
+<meta property="og:description" content="Bugünkü 2.000 lira 2003'te 49 milyon lira ediyordu. Tarihi seç, karşılığını gör.">
+<meta property="og:url" content="https://nakdizamaninda.com/">
+<meta property="og:image" content="https://nakdizamaninda.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Nakdi Zamanında — 2.000 TL, 2003'te 49.060.000 TL">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nakdi Zamanında — Paranın yıllar arası karşılığı">
+<meta name="twitter:description" content="Bugünkü 2.000 lira 2003'te 49 milyon lira ediyordu. Tarihi seç, karşılığını gör.">
+<meta name="twitter:image" content="https://nakdizamaninda.com/og.png">
+
+<link rel="icon" href="icon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Nakdi">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#dcdfd4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;   /* karanlik modda select/option sistem renklerini almasin */
+  --kagit:#dcdfd4; --kagit-koyu:#ccd1c2; --kagit-acik:#e6e8df;
+  --murekkep:#1c2620; --murekkep-soluk:#5d6659;
+  --mor:#654a8c; --pas:#a03a28; --yesil:#2f6b4f;
+  --cizgi:rgba(28,38,32,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+/* Zemin body'de kalirsa gomulu goruntuleyiciler kendi koyu temasiyla eziyor.
+   Bu yuzden kagit yuzeyi gercek bir ogeye (.sayfa) veriyoruz. */
+html,body{background-color:#dcdfd4 !important;}
+body{
+  color:var(--murekkep);
+  font-family:'Archivo',system-ui,sans-serif;min-height:100dvh;
+  margin:0;padding:0;display:flex;justify-content:center;
+}
+.sayfa{
+  width:100%;max-width:440px;min-height:100dvh;
+  padding:20px 16px 40px;
+  background-color:var(--kagit);
+  color:var(--murekkep);
+  background-image:
+    repeating-linear-gradient(90deg,rgba(28,38,32,.028) 0 1px,transparent 1px 4px),
+    repeating-linear-gradient(0deg,rgba(28,38,32,.028) 0 1px,transparent 1px 4px);
+}
+/* Sistem karanlik moddayken de renkler sabit kalsin */
+@media (prefers-color-scheme:dark){
+  html,body{background-color:#dcdfd4 !important;}
+  .sayfa{background-color:var(--kagit);color:var(--murekkep)}
+}
+.ust{display:flex;justify-content:space-between;align-items:baseline;
+  padding-bottom:12px;border-bottom:1.5px solid var(--murekkep);margin-bottom:22px}
+.marka{font-size:15px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.seri{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--murekkep-soluk)}
+
+.panel{position:relative;background:var(--kagit-acik);
+  border:1.5px solid var(--murekkep);padding:16px 16px 18px;overflow:hidden}
+.panel.hedef{background:var(--kagit-koyu)}
+.etiket{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;position:relative;z-index:2}
+.etiket span{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--murekkep-soluk)}
+select.yil{font-family:'Space Mono',monospace;font-size:19px;font-weight:700;
+  background:transparent;border:none;border-bottom:1.5px solid var(--murekkep);
+  color:var(--murekkep);padding:1px 22px 1px 4px;cursor:pointer;
+  appearance:none;-webkit-appearance:none;border-radius:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='7'><path d='M1 1l4 4 4-4' stroke='%231c2620' stroke-width='1.6' fill='none'/></svg>");
+  background-repeat:no-repeat;background-position:right 3px center}
+select.yil:focus-visible,select.ay:focus-visible{outline:2px solid var(--mor);outline-offset:2px}
+.tarih{display:flex;align-items:baseline;gap:8px}
+select.ay{
+  font-family:'Archivo';font-size:13px;font-weight:600;letter-spacing:.04em;
+  background:transparent;border:none;border-bottom:1.5px solid var(--cizgi);
+  color:var(--murekkep-soluk);padding:2px 16px 2px 3px;cursor:pointer;
+  appearance:none;-webkit-appearance:none;border-radius:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='6'><path d='M1 1l3 3 3-3' stroke='%235d6659' stroke-width='1.5' fill='none'/></svg>");
+  background-repeat:no-repeat;background-position:right 2px center;
+}
+select.ay:disabled{opacity:.35;cursor:default;background-image:none}
+select.ay option{background:#e6e8df;color:#1c2620}
+/* Acilir liste sistem temasindan etkilenmesin */
+select.yil option{background:#e6e8df;color:#1c2620;font-weight:700}
+select.yil option:checked{background:#ccd1c2}
+.tutar-satir{display:flex;align-items:baseline;gap:8px;position:relative;z-index:2}
+input.tutar{font-family:'Space Mono',monospace;font-weight:700;font-size:34px;
+  background:transparent;border:none;color:var(--murekkep);width:100%;min-width:0;padding:0;letter-spacing:-.02em}
+input.tutar:focus{outline:none}
+.panel:focus-within{box-shadow:inset 0 0 0 2px var(--mor)}
+.birim{font-size:13px;font-weight:700;letter-spacing:.1em;color:var(--murekkep-soluk);white-space:nowrap}
+.rozet{position:absolute;right:-58px;bottom:-58px;width:190px;height:190px;opacity:.13;pointer-events:none;z-index:1}
+button.dolgu{
+  position:relative;z-index:2;margin-top:9px;
+  font-family:'Archivo';font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:5px 9px;background:transparent;border:1px solid var(--cizgi);
+  color:var(--murekkep-soluk);cursor:pointer;transition:.15s;
+}
+button.dolgu:hover{background:var(--murekkep);color:var(--kagit-acik);border-color:var(--murekkep)}
+button.dolgu:focus-visible{outline:2px solid var(--mor);outline-offset:2px}
+button.dolgu[hidden]{display:none}
+.olay{position:relative;z-index:2;margin-top:12px;padding-left:11px;
+  border-left:2px solid var(--mor);font-size:11.5px;line-height:1.5;color:var(--murekkep-soluk)}
+.olay[hidden]{display:none}
+.olay b{color:var(--murekkep);font-weight:600}
+
+.takas-sar{display:flex;justify-content:center;margin:-15px 0;position:relative;z-index:5}
+button.takas{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--murekkep);
+  background:var(--kagit);cursor:pointer;display:grid;place-items:center;
+  font-size:15px;color:var(--murekkep);transition:transform .25s ease}
+button.takas:hover{background:var(--mor);color:var(--kagit-acik);border-color:var(--mor)}
+button.takas:active{transform:rotate(180deg)}
+button.takas:focus-visible{outline:2px solid var(--mor);outline-offset:2px}
+
+.eski-kutu{margin-top:14px;padding-top:13px;border-top:1px dashed var(--cizgi);position:relative;z-index:2}
+.eski-kutu[hidden]{display:none}
+.eski-ust{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+.eski-baslik{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--pas)}
+.svic{position:relative;width:38px;height:21px;flex:none}
+.svic input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.svic i{position:absolute;inset:0;background:var(--kagit);border:1.5px solid var(--murekkep-soluk);border-radius:11px;transition:.2s;pointer-events:none}
+.svic i::after{content:"";position:absolute;width:13px;height:13px;background:var(--murekkep-soluk);border-radius:50%;top:2px;left:2px;transition:.2s}
+.svic input:checked + i{border-color:var(--pas);background:rgba(160,58,40,.12)}
+.svic input:checked + i::after{transform:translateX(17px);background:var(--pas)}
+.svic input:focus-visible + i{outline:2px solid var(--mor);outline-offset:2px}
+.eski-deger{font-family:'Space Mono',monospace;font-weight:700;font-size:21px;color:var(--pas);word-break:break-all;line-height:1.25}
+.eski-not{font-size:11px;color:var(--murekkep-soluk);margin-top:6px;line-height:1.45}
+
+/* --- SEPET --- */
+.sepet{margin-top:24px;border:1.5px solid var(--murekkep);background:var(--kagit-acik)}
+.sepet-bas{padding:11px 14px;border-bottom:1.5px solid var(--murekkep);
+  display:flex;justify-content:space-between;align-items:baseline}
+.sepet-bas h2{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.sepet-bas em{font-style:normal;font-size:10px;color:var(--murekkep-soluk)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;
+  padding:8px 14px;text-align:right;color:var(--murekkep-soluk);border-bottom:1px solid var(--cizgi)}
+thead th:first-child{text-align:left}
+tbody td{padding:10px 14px;border-bottom:1px solid var(--cizgi);text-align:right;
+  font-family:'Space Mono',monospace;font-weight:700;font-size:13px}
+tbody td:first-child{text-align:left;font-family:'Archivo';font-weight:500;font-size:13px}
+tbody tr:last-child td{border-bottom:none}
+tbody td.yok{color:var(--murekkep-soluk);font-weight:400;font-size:11px}
+td small{display:block;font-family:'Space Mono',monospace;font-size:10px;font-weight:400;
+  color:var(--murekkep-soluk);margin-top:2px;letter-spacing:-.02em}
+td i.br{font-style:normal;font-family:'Archivo';font-size:10px;font-weight:500;
+  color:var(--murekkep-soluk);margin-left:3px}
+.fark{font-size:10px;font-weight:600;letter-spacing:.04em}
+.fark.arti{color:var(--yesil)} .fark.eksi{color:var(--pas)}
+.sepet-not{padding:11px 14px;border-top:1.5px solid var(--murekkep);
+  font-size:11px;line-height:1.55;color:var(--murekkep-soluk);background:var(--kagit-koyu)}
+.sepet-not b{color:var(--murekkep)}
+
+.kart-secim{display:flex;gap:8px;margin-top:18px}
+button.kart-btn{
+  flex:1;padding:14px;
+  font-family:'Archivo';font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  background:var(--murekkep);color:var(--kagit-acik);border:1.5px solid var(--murekkep);
+  cursor:pointer;transition:.15s;
+}
+button.kart-btn:hover{background:var(--mor);border-color:var(--mor)}
+button.kart-btn:disabled{opacity:.5;cursor:wait}
+button.kart-btn:focus-visible{outline:2px solid var(--mor);outline-offset:2px}
+.kart-durum{margin-top:9px;padding:9px 11px;border-left:2px solid var(--mor);
+  background:rgba(101,74,140,.09);font-size:11px;line-height:1.55;color:var(--murekkep)}
+.kart-durum[hidden]{display:none}
+.kart-onizleme{margin-top:12px;border:1.5px solid var(--murekkep);background:var(--kagit-acik);padding:10px}
+.kart-onizleme[hidden]{display:none}
+.kart-onizleme img{display:block;width:100%;height:auto;border:1px solid var(--cizgi)}
+a.kart-indir{display:block;margin-top:10px;padding:11px;text-align:center;text-decoration:none;
+  font-family:'Archivo';font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--murekkep);color:var(--kagit-acik);border:1.5px solid var(--murekkep)}
+a.kart-indir:hover{background:var(--mor);border-color:var(--mor)}
+a.kart-indir:focus-visible{outline:2px solid var(--mor);outline-offset:2px}
+
+.hizli{margin-top:22px}.hizli-bas{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--murekkep-soluk);margin-bottom:9px}
+.cipler{display:flex;flex-wrap:wrap;gap:6px}
+button.cip{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;
+  padding:6px 9px;background:transparent;border:1px solid var(--cizgi);color:var(--murekkep);cursor:pointer;transition:.15s}
+button.cip:hover{background:var(--mor);color:var(--kagit-acik);border-color:var(--mor)}
+button.cip[aria-pressed="true"]{background:var(--murekkep);color:var(--kagit-acik);border-color:var(--murekkep)}
+button.cip:focus-visible{outline:2px solid var(--mor);outline-offset:2px}
+button.cip small{display:block;font-family:'Archivo';font-size:9.5px;font-weight:500;
+  letter-spacing:.04em;opacity:.85;margin-top:2px}
+/* koyu ve mor zeminde ince yazı arka plana karışıyor: tam opaklık ver */
+button.cip:hover small,
+button.cip[aria-pressed="true"] small{opacity:1}
+
+.dipnot{margin-top:26px;padding-top:14px;border-top:1.5px solid var(--murekkep);font-size:11px;line-height:1.6;color:var(--murekkep-soluk)}
+.dipnot b{color:var(--murekkep);font-weight:600}
+.uyari{margin-top:10px;padding:9px 11px;background:rgba(101,74,140,.09);border-left:2px solid var(--mor);font-size:11px;line-height:1.55}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="sayfa">
+
+  <header class="ust">
+    <div class="marka">Nakdi Zamanında</div>
+    <div class="seri" id="seriNot">TÜFE</div>
+  </header>
+
+  <div class="uyari" id="kismiNot" hidden style="margin:0 0 16px">
+    <b>Ay seçimi 1994'ten itibaren.</b> TÜİK aylık endeksi 1994'te başlıyor;
+    daha eski yıllarda hesap yıl sonu değeri üzerinden yapılır ve ay seçici kapanır.
+  </div>
+
+  <section class="panel">
+    <svg class="rozet" viewBox="0 0 200 200" aria-hidden="true"><g id="r1" fill="none" stroke="#1c2620" stroke-width=".7"></g></svg>
+    <div class="etiket"><span>Şu tarihteki</span><span class="tarih"><select class="ay" id="ayA" aria-label="Kaynak ay"></select><select class="yil" id="yilA" aria-label="Kaynak yıl"></select></span></div>
+    <div class="tutar-satir">
+      <input class="tutar" autocomplete="off" enterkeyhint="done" id="tutarA" inputmode="decimal" value="2.000" aria-label="Kaynak tutar">
+      <span class="birim" id="birimA">TL</span>
+    </div>
+    <button class="dolgu" id="dolguA" data-p="A" hidden>asgari ücret</button>
+    <p class="olay" id="olayA" hidden></p>
+  </section>
+
+  <div class="takas-sar"><button class="takas" id="takas" aria-label="Yılları takas et">⇅</button></div>
+
+  <section class="panel hedef">
+    <svg class="rozet" viewBox="0 0 200 200" aria-hidden="true"><g id="r2" fill="none" stroke="#1c2620" stroke-width=".7"></g></svg>
+    <div class="etiket"><span>Şu tarihte eder</span><span class="tarih"><select class="ay" id="ayB" aria-label="Hedef ay"></select><select class="yil" id="yilB" aria-label="Hedef yıl"></select></span></div>
+    <div class="tutar-satir">
+      <input class="tutar" autocomplete="off" enterkeyhint="done" id="tutarB" inputmode="decimal" aria-label="Hedef tutar">
+      <span class="birim" id="birimB">TL</span>
+    </div>
+    <button class="dolgu" id="dolguB" data-p="B" hidden>asgari ücret</button>
+    <p class="olay" id="olayB" hidden></p>
+    <div class="eski-kutu" id="eskiKutu" hidden>
+      <div class="eski-ust">
+        <span class="eski-baslik">Dönemin parasıyla</span>
+        <label class="svic"><input type="checkbox" id="eskiSvic" checked aria-label="Eski TL göster"><i></i></label>
+      </div>
+      <div class="eski-deger" id="eskiDeger">—</div>
+      <div class="eski-not" id="eskiNot"></div>
+    </div>
+  </section>
+
+  <!-- SEPET -->
+  <section class="sepet">
+    <div class="sepet-bas">
+      <h2>Bu para ne alırdı</h2>
+      <em>küçük satır: o yılın fiyatı, dönemin parasıyla</em>
+    </div>
+    <table>
+      <thead><tr>
+        <th>Kalem</th><th id="basA">—</th><th id="basB">—</th>
+      </tr></thead>
+      <tbody id="sepetGovde"></tbody>
+    </table>
+    <div class="sepet-not" id="sepetNot"></div>
+  </section>
+
+  <div class="kart-secim">
+    <button class="kart-btn" data-yuk="1350">Kart · 4:5</button>
+    <button class="kart-btn" data-yuk="1920">Story · 9:16</button>
+  </div>
+  <div class="kart-durum" id="kartDurum" hidden></div>
+  <div class="kart-onizleme" id="kartOnizleme" hidden>
+    <img id="kartGorsel" alt="Paylaşım kartı önizlemesi">
+    <a class="kart-indir" id="kartIndir" download>İndir · 1080×1350 PNG</a>
+  </div>
+
+  <div class="hizli">
+    <div class="hizli-bas">Hızlı yıl</div>
+    <div class="cipler" id="cipler"></div>
+  </div>
+
+  <footer class="dipnot">
+    <b>Hesap:</b> TÜİK yıllık TÜFE oranlarından zincirlenen endeks (2003 = 100).
+    Sepet, her iki yılın kendi fiyatlarıyla ayrı ayrı hesaplanır — aradaki fark,
+    o kalemin enflasyonun önünde mi arkasında mı kaldığını gösterir.
+    <div class="uyari">
+      <b>Veri notu:</b> TÜFE <b>aylık</b> endekstir (TÜİK 1994=100 ve 2003=100 serileri, resmi yıllık oranla bağlanmıştır). Sepet kalemleri ise <b>yıl sonu</b> değeridir.
+      Asgari ücret 1996'dan, dolar 1980'den, euro 2001'den, altın 1980'den itibaren var.
+      Altın 1980–2023 arası ons fiyatı ve kurdan türetilmiştir (piyasa değerleriyle ~%1 sapma).
+      Seriler <code>veri.json</code> dosyasındadır; aylık güncelleme yalnız o dosyada yapılır.
+    </div>
+    <div class="uyari" id="linkNot" hidden>
+      <b>Link paylaşımı bu ortamda kapalı.</b> Sayfa yalıtılmış bir çerçevede
+      açıldığı için adres çubuğu güncellenemiyor. Dosyayı doğrudan tarayıcıda
+      veya kendi sunucunda açtığında seçimlerin linke yazılır.
+    </div>
+  </footer>
+</div>
+
+<script>
+/* ---------- VERİ ----------
+   Seriler veri.json'dan yüklenir. Aylık güncelleme için SADECE o dosya değişir. */
+let EA,OLAYLAR,ASGARI,USD,EUR,ALTIN;
+let E,SONAY,SON,SON_YIL,SON_AY,YILLAR,KALEMLER,GUNCELLEME;
+
+// TÜFE endeksi, yıl sonu, 2003 = 100
+
+
+// Aylık veri 1994-01'den itibaren; öncesi yalnız Aralık.
+// Yıl bazlı erişimde o yılın SON yayınlanan ayını kullan — cari yılın Aralık'ı henüz yok.
+
+const AYLAR=["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+
+// O ay/yıl ne olmuştu — ay anahtarı öncelikli, yoksa yıl anahtarına düşer
+
+function olayBul(y,m){
+  const tam=OLAYLAR[`${y}-${String(m).padStart(2,"0")}`];
+  if(tam) return tam;
+  if(OLAYLAR[String(y)]) return OLAYLAR[String(y)];
+  // 1994 öncesi ay seçilemez: o yıla ait ay kayıtlarını yine de göster
+  if(y<AYLIK_BAS){
+    const ayli=Object.keys(OLAYLAR).filter(k=>k.startsWith(y+"-")).sort();
+    if(ayli.length) return ayli.map(k=>OLAYLAR[k]).join(" ");
+  }
+  return null;
+}
+const AYLIK_BAS=1994;                       // bu yıldan önce ay seçilemez
+
+
+const endeks=(y,m)=>EA[`${y}-${String(m).padStart(2,"0")}`] ?? EA[`${y}-${SONAY[y]}`];
+
+// Net asgari ücret, yıl sonu, yeni TL. Kaynak: ÇSGB resmi tablo (1996–2021) + AÜTK kararları
+
+
+// USD/TRY yıl sonu, yeni TL. 1980–2010 TCMB resmi tablo
+
+
+// EUR/TRY yıl sonu. 2001–2010 TCMB resmi tablo, sonrası derleme
+
+
+// Gram altın TL yıl sonu. 1980–2023 ons/kur türetmesi, 2024–2025 piyasa arşivi
+
+
+// Hızlı tarihler: olayın gerçekten olduğu ay ile birlikte
+const CIPLER=[
+  [1980,1,"24 Ocak Kararları"],
+  [1994,4,"5 Nisan Kararları"],
+  [2001,2,"Kara Çarşamba"],
+  [2005,1,"6 sıfır atıldı"],
+  [2008,9,"Küresel kriz"],
+  [2018,8,"Kur şoku"],
+  [2021,12,"Kur atağı"],
+  [2023,6,"Faiz dönüşü"],
+  [2026,7,"Bugün"]
+];
+
+
+
+/* ---------- YARDIMCI ---------- */
+const $=s=>document.querySelector(s);
+
+const yilA=$("#yilA"),yilB=$("#yilB"),ayA=$("#ay"+"A"),ayB=$("#ay"+"B"),tutarA=$("#tutarA"),tutarB=$("#tutarB"),
+      birimA=$("#birimA"),birimB=$("#birimB"),eskiKutu=$("#eskiKutu"),
+      eskiSvic=$("#eskiSvic"),eskiDeger=$("#eskiDeger"),eskiNot=$("#eskiNot");
+
+const fmt=(n,ond=2)=>{
+  if(!isFinite(n))return "—";
+  const d=Math.abs(n)>=1000?0:(Math.abs(n)<1?(ond>0?4:2):ond);
+  return n.toLocaleString("tr-TR",{minimumFractionDigits:d,maximumFractionDigits:d});
+};
+const oku=el=>{
+  const v=parseFloat(el.value.replace(/\./g,"").replace(",",".").replace(/[^0-9.]/g,""));
+  return isFinite(v)?v:0;
+};
+// Fiyat gösterimi: büyük sayıda ondalık gereksiz, küçük sayıda şart
+const fiyatFmt=n=>{
+  const a=Math.abs(n);
+  const d = a>=100 ? 0 : a>=1 ? 2 : a>=0.01 ? 4 : 6;
+  return n.toLocaleString("tr-TR",{minimumFractionDigits:d,maximumFractionDigits:d});
+};
+const birimAdi=y=>y<=2004?"TL":(y<=2008?"YTL":"TL");
+
+// Ay listesi: 1994 öncesinde aylık veri yok, son yılda ise yayınlanan aya kadar
+function ayDoldur(sel,yil){
+  const varMi=yil>=AYLIK_BAS;
+  const son=(yil===SON_YIL)?SON_AY:12;
+  const imza=`${varMi}-${son}`;
+  if(sel.dataset.imza!==imza){
+    const secili=+sel.value||12;
+    sel.innerHTML=AYLAR.slice(0,varMi?son:12)
+      .map((ad,i)=>`<option value="${i+1}">${ad}</option>`).join("");
+    sel.value=Math.min(secili,varMi?son:12);
+    sel.dataset.imza=imza;
+  }
+  sel.disabled=!varMi;
+  if(!varMi) sel.value=12;
+  else if(+sel.value>son) sel.value=son;
+}
+
+function rozetCiz(id){
+  const g=document.getElementById(id);let s="";
+  for(let i=0;i<38;i++) s+=`<ellipse cx="100" cy="100" rx="82" ry="30" transform="rotate(${i*180/38} 100 100)"/>`;
+  g.innerHTML=s+`<circle cx="100" cy="100" r="86"/><circle cx="100" cy="100" r="60"/>`;
+}
+
+/* ---------- SEPET ---------- */
+function sepetCiz(a,b,tutA,tutB){
+  $("#basA").textContent=a; $("#basB").textContent=b;
+  let satirlar="", enBuyukFark=null;
+
+  KALEMLER.forEach(k=>{
+    const fa=k.veri[a], fb=k.veri[b];
+    if(!fa||!fb){
+      const eksik = !fa ? a : b;
+      satirlar+=`<tr><td>${k.ad}</td><td colspan="2" class="yok">${eksik} verisi yok</td></tr>`;
+      return;
+    }
+    const adetA=tutA/fa, adetB=tutB/fb;
+    // adetB/adetA: 1'den büyükse kalem enflasyonun gerisinde kalmış (aynı parayla daha çok alınıyor)
+    const oran=adetB/adetA;
+    const yuzde=(oran-1)*100;
+    if(!enBuyukFark || Math.abs(yuzde)>Math.abs(enBuyukFark.y)) enBuyukFark={ad:k.ad,y:yuzde};
+    const sinif=yuzde>=0?"arti":"eksi";
+    const isaret=yuzde>=0?"+":"";
+    // 2005 öncesi fiyatı dönemin kendi lirasıyla göster — "0,0384 TL" değil "38.418 TL"
+    const hucre=(adet,fiyat,yil)=>{
+      const donem = yil<=2004 ? fiyat*1e6 : fiyat;
+      return `<td>${fmt(adet,k.ond)}<i class="br">${k.birim}</i>
+        <small>${fiyatFmt(donem)} ${birimAdi(yil)}${k.ek||""}</small></td>`;
+    };
+    satirlar+=`<tr>
+      <td>${k.ad}
+        <span class="fark ${sinif}">${isaret}${fmt(yuzde,0)}%</span>
+      </td>
+      ${hucre(adetA,fa,a)}${hucre(adetB,fb,b)}
+    </tr>`;
+  });
+
+  $("#sepetGovde").innerHTML=satirlar;
+
+  if(enBuyukFark){
+    const {ad,y}=enBuyukFark;
+    $("#sepetNot").innerHTML = y>=0
+      ? `<b>${ad}</b> enflasyonun <b>gerisinde</b> kalmış: aynı satın alma gücüyle ${b} yılında ${fmt(Math.abs(y),0)}% daha fazlasını alıyorsunuz.`
+      : `<b>${ad}</b> enflasyonun <b>önüne geçmiş</b>: aynı satın alma gücüyle ${b} yılında ${fmt(Math.abs(y),0)}% daha azını alıyorsunuz.`;
+  } else {
+    $("#sepetNot").textContent="Seçilen yıllar için karşılaştırılabilir veri yok.";
+  }
+}
+
+/* ---------- ANA HESAP ---------- */
+let yon="A";
+function hesapla(){
+  const a=+yilA.value, b=+yilB.value;
+  ayDoldur(ayA,a); ayDoldur(ayB,b);
+  const ma=+ayA.value, mb=+ayB.value;
+  const Ea=endeks(a,ma), Eb=endeks(b,mb);
+  birimA.textContent=birimAdi(a); birimB.textContent=birimAdi(b);
+
+  if(yon==="A") tutarB.value=fmt(oku(tutarA)*(Eb/Ea));
+  else          tutarA.value=fmt(oku(tutarB)*(Ea/Eb));
+
+  const tutA=oku(tutarA), tutB=oku(tutarB);
+
+  if(b<=2004){
+    eskiKutu.hidden=false;
+    eskiDeger.textContent=eskiSvic.checked?fmt(tutB*1e6,0)+" TL":fmt(tutB)+" TL (yeni)";
+    eskiNot.textContent=eskiSvic.checked
+      ?`${b} yılında bu para banknotların üzerinde böyle yazıyordu. 1 Ocak 2005'te liradan altı sıfır atıldı.`
+      :"Bugünün lirası cinsinden. Aç: dönemin banknotlarındaki rakam.";
+  } else eskiKutu.hidden=true;
+
+  sepetCiz(a,b,tutA,tutB);
+
+  // Kısmi yıl seçiliyse bunu görünür kıl — tam yılmış gibi durmasın
+  $("#kismiNot").hidden = !(a<AYLIK_BAS || b<AYLIK_BAS);
+  $("#seriNot").textContent = `TÜFE · son veri ${AYLAR[SON_AY-1]} ${SON_YIL}`;
+
+  // O tarihte ne olmuştu
+  [["A",a,ma],["B",b,mb]].forEach(([P,yl,ay])=>{
+    const el=document.getElementById("olay"+P), o=olayBul(yl,ay);
+    el.hidden=!o;
+    if(o) el.innerHTML=`<b>${tarihYazi(yl,ay)}</b> — ${o}`;
+  });
+
+  // Asgari ücret butonları: veri olmayan yıllarda (1996 öncesi) gizlenir
+  [["A",yilA],["B",yilB]].forEach(([p,sel])=>{
+    const btn=document.getElementById("dolgu"+p), y=+sel.value, ucret=ASGARI[y];
+    btn.hidden = !ucret;
+    if(ucret) btn.title = `${y} yılı net asgari ücreti alana yazılır`;
+  });
+
+  document.querySelectorAll(".cip").forEach(c=>c.setAttribute("aria-pressed",
+    String(+c.dataset.y===b && (b<AYLIK_BAS || +c.dataset.m===mb))));
+  urlYaz(a,b,yon==="A"?tutA:tutB);
+}
+
+// Sandbox'lı iframe'de location okunamaz ve replaceState SecurityError atar.
+// Bir kez dener, olmuyorsa sessizce kapatır — hesap çalışmaya devam eder.
+let urlDestek=true;
+function urlYaz(a,b,t){
+  if(!urlDestek) return;
+  try{
+    const u=new URL(String(location));
+    u.searchParams.set("a",a); u.searchParams.set("b",b);
+    u.searchParams.set("t",t); u.searchParams.set("y",yon);
+    history.replaceState(null,"",u);
+  }catch(e){
+    urlDestek=false;              // bir daha deneme
+    const d=document.getElementById("linkNot");
+    if(d) d.hidden=false;
+  }
+}
+function urlOku(){
+  try{ return new URLSearchParams(String(location.search||"")); }
+  catch(e){ urlDestek=false; return new URLSearchParams(""); }
+}
+
+/* ---------- OLAYLAR ---------- */
+[tutarA,tutarB].forEach((el,i)=>{
+  const hepsiniSec=()=>{ try{ el.setSelectionRange(0,el.value.length); }catch(e){} };
+
+  // Alana ilk girişte sayının tamamı seçili gelsin -> yazılan ilk rakam üzerine yazar.
+  // iOS/Android dokunuşu seçimi daraltır, o yüzden focus'tan sonraki ilk tıklamada tekrar seçiyoruz.
+  el.addEventListener("focus",()=>{ el.dataset.ilk="1"; setTimeout(hepsiniSec,0); });
+  el.addEventListener("click",()=>{
+    if(el.dataset.ilk){ delete el.dataset.ilk; hepsiniSec(); }
+    // ikinci dokunuş serbest: imleci istediği yere koyabilsin
+  });
+
+  el.addEventListener("input",()=>{yon=i===0?"A":"B";hesapla()});
+  el.addEventListener("blur",()=>{ delete el.dataset.ilk; el.value=fmt(oku(el)); });
+});
+[yilA,yilB,ayA,ayB].forEach(el=>el.addEventListener("change",hesapla));
+
+// Butona basınca o panelin yılına ait net asgari ücreti alana yaz ve o yönden hesapla
+[["A",tutarA,yilA],["B",tutarB,yilB]].forEach(([p,inp,sel])=>{
+  document.getElementById("dolgu"+p).addEventListener("click",()=>{
+    const ucret=ASGARI[+sel.value];
+    if(!ucret) return;
+    inp.value=fmt(ucret);
+    yon=p;
+    hesapla();
+  });
+});
+eskiSvic.addEventListener("change",hesapla);
+$("#takas").addEventListener("click",()=>{
+  [yilA.value,yilB.value]=[yilB.value,yilA.value];
+  ayDoldur(ayA,+yilA.value); ayDoldur(ayB,+yilB.value);
+  [ayA.value,ayB.value]=[ayB.value,ayA.value];
+  [tutarA.value,tutarB.value]=[tutarB.value,tutarA.value];
+  yon="A";hesapla();
+});
+$("#cipler").addEventListener("click",e=>{
+  const b=e.target.closest(".cip"); if(!b)return;
+  yilB.value=b.dataset.y;
+  ayDoldur(ayB,+b.dataset.y);          // önce o yılın ay listesi kurulsun
+  if(+b.dataset.y>=AYLIK_BAS) ayB.value=b.dataset.m;
+  yon="A"; hesapla();
+});
+
+/* ---------- PAYLAŞIM KARTI (1080×1350, 4:5) ---------- */
+const K={G:1080,Y:1350,KENAR:76,
+  kagit:"#dcdfd4",kagitAcik:"#e6e8df",murekkep:"#1c2620",soluk:"#5d6659",
+  pas:"#a03a28",yesil:"#2f6b4f",mor:"#654a8c",cizgi:"rgba(28,38,32,.18)"};
+
+function yaz(c,metin,x,y,{boy=28,kalin=400,tek=false,renk=K.murekkep,ara=0,hiza="left"}={}){
+  c.font=`${kalin} ${boy}px ${tek?"'Space Mono',monospace":"'Archivo',sans-serif"}`;
+  c.fillStyle=renk; c.textAlign=hiza; c.textBaseline="alphabetic";
+  if(ara){ try{ c.letterSpacing=`${ara}px`; }catch(e){} }
+  c.fillText(metin,x,y);
+  try{ c.letterSpacing="0px"; }catch(e){}
+  return c.measureText(metin).width;
+}
+function cizgiCek(c,x1,y,x2,kalinlik=2,renk=K.murekkep){
+  c.strokeStyle=renk; c.lineWidth=kalinlik;
+  c.beginPath(); c.moveTo(x1,y); c.lineTo(x2,y); c.stroke();
+}
+function guilloche(c,cx,cy,r){
+  c.save(); c.globalAlpha=.10; c.strokeStyle=K.murekkep; c.lineWidth=1;
+  for(let i=0;i<40;i++){
+    c.save(); c.translate(cx,cy); c.rotate(i*Math.PI/40);
+    c.beginPath(); c.ellipse(0,0,r,r*.36,0,0,Math.PI*2); c.stroke(); c.restore();
+  }
+  c.beginPath(); c.arc(cx,cy,r*1.05,0,Math.PI*2); c.stroke();
+  c.restore();
+}
+
+// 1994 öncesi için ay anlamsız: sadece yıl yaz
+const tarihYazi=(y,m)=> y>=AYLIK_BAS ? `${AYLAR[m-1]} ${y}` : `${y}`;
+
+
+// Uzun metni kart genişliğine göre satırlara böl
+function sarmala(c,metin,genislik,font){
+  c.font=font;
+  const kelime=metin.split(" "); const satir=[]; let s="";
+  for(const k of kelime){
+    const dene=s?s+" "+k:k;
+    if(c.measureText(dene).width>genislik && s){ satir.push(s); s=k; }
+    else s=dene;
+  }
+  if(s) satir.push(s);
+  return satir;
+}
+
+function kartCiz(YUK){
+  const Y=YUK||K.Y;
+  const EK=Y-1350, bol=EK*0.055;  // 9:16'da fazladan alan hero boşluklarına dağıtılır
+  // Story'de Instagram üst/alt bantları arayüzüyle kapatır: içeriği güvenli alana çek
+  const ustPay=EK?170:0, altPay=EK?190:0;
+  const c=document.createElement("canvas").getContext("2d");
+  c.canvas.width=K.G; c.canvas.height=Y;
+  const SOL=K.KENAR, SAG=K.G-K.KENAR;
+
+  // zemin + doku
+  c.fillStyle=K.kagit; c.fillRect(0,0,K.G,Y);
+  c.fillStyle="rgba(28,38,32,.028)";
+  for(let x=0;x<K.G;x+=10) c.fillRect(x,0,2,Y);
+  for(let y=0;y<Y;y+=10) c.fillRect(0,y,K.G,2);
+  guilloche(c,K.G-40,300,300);
+
+  const a=+yilA.value, b=+yilB.value, tutA=oku(tutarA), tutB=oku(tutarB);
+  let y=134+ustPay;
+
+  // başlık
+  yaz(c,"NAKDİ ZAMANINDA",SOL,y,{boy:28,kalin:700,ara:6});
+  yaz(c,"TÜİK · TÜFE",SAG,y,{boy:22,kalin:400,renk:K.soluk,hiza:"right",tek:true});
+  y+=26; cizgiCek(c,SOL,y,SAG,3); y+=78+bol;
+
+  // kaynak
+  yaz(c,tarihYazi(a,+ayA.value).toUpperCase()+"'DA",SOL,y,{boy:22,kalin:600,ara:4,renk:K.soluk});
+  y+=76+bol;
+  const w1=yaz(c,fmt(tutA),SOL,y,{boy:76,kalin:700,tek:true});
+  yaz(c,birimAdi(a),SOL+w1+16,y,{boy:26,kalin:700,renk:K.soluk});
+  y+=64;
+
+  // ok
+  yaz(c,"↓",SOL+4,y+30,{boy:44,kalin:400,renk:K.soluk}); y+=76+bol;
+
+  // hedef
+  yaz(c,tarihYazi(b,+ayB.value).toUpperCase()+"'DA EDERDİ",SOL,y,{boy:22,kalin:600,ara:4,renk:K.soluk});
+  y+=96+bol;
+  const w2=yaz(c,fmt(tutB),SOL,y,{boy:104,kalin:700,tek:true});
+  yaz(c,birimAdi(b),SOL+w2+18,y,{boy:30,kalin:700,renk:K.soluk});
+  y+=52;
+
+  // eski para vurgusu
+  if(b<=2004){
+    y+=44+bol;
+    yaz(c,"DÖNEMİN PARASIYLA",SOL,y,{boy:20,kalin:700,ara:4,renk:K.pas});
+    y+=62;
+    yaz(c,fiyatFmt(tutB*1e6)+" TL",SOL,y,{boy:62,kalin:700,tek:true,renk:K.pas});
+    y+=42;
+  }
+
+  // hedef tarihte ne olmuştu
+  const olay=olayBul(b,+ayB.value);
+  if(olay){
+    y+=34;
+    const font="400 22px 'Archivo',sans-serif";
+    const satirlar=sarmala(c,olay,SAG-SOL-22,font);
+    c.fillStyle=K.mor; c.fillRect(SOL,y-20,3,satirlar.length*30+4);
+    satirlar.forEach((s,i)=>yaz(c,s,SOL+22,y+i*30,{boy:22,kalin:400,renk:K.soluk}));
+    y+=satirlar.length*30-10;
+  }
+
+  // sepet — kutuyu alt bilgiye sabitle ki üstteki içerik değişse de boşluk kalmasın
+  const satir=[];
+  KALEMLER.forEach(k=>{
+    const fa=k.veri[a], fb=k.veri[b];
+    if(fa&&fb) satir.push({ad:k.ad,birim:k.birim,ond:k.ond,adetA:tutA/fa,adetB:tutB/fb});
+  });
+  if(satir.length){
+    // Satır yüksekliği kalan boşluğa göre esner: eski para bloğu yokken kutu büyür
+    const altSinir=Y-K.KENAR-14-42-46-altPay, ustSinir=y+30, baslikH=78;
+    const bosluk=altSinir-ustSinir-baslikH;
+    const tavan=112+EK*0.55/satir.length;
+    const satirH=Math.max(56,Math.min(tavan,bosluk/satir.length));
+    const kutuH=baslikH+satir.length*satirH;
+    const kutuY=Math.max(ustSinir,altSinir-kutuH);  // içerikle çakışmayı engelle
+    c.fillStyle=K.kagitAcik; c.fillRect(SOL,kutuY,SAG-SOL,kutuH);
+    c.strokeStyle=K.murekkep; c.lineWidth=3; c.strokeRect(SOL,kutuY,SAG-SOL,kutuH);
+
+    const p=28, kolB=SAG-p, kolA=SAG-p-250;
+    y=kutuY+46;
+    yaz(c,"BU PARA NE ALIRDI",SOL+p,y,{boy:20,kalin:700,ara:4,renk:K.soluk});
+    yaz(c,String(a),kolA,y,{boy:20,kalin:700,tek:true,renk:K.soluk,hiza:"right"});
+    yaz(c,String(b),kolB,y,{boy:20,kalin:700,tek:true,renk:K.soluk,hiza:"right"});
+    y+=22; cizgiCek(c,SOL+p,y,SAG-p,1,K.cizgi); y+=52;
+
+    satir.forEach(s=>{
+      const fark=(s.adetB/s.adetA-1)*100;
+      const wn=yaz(c,s.ad,SOL+p,y,{boy:27,kalin:500});
+      yaz(c,(fark>=0?"+":"")+fmt(fark,0)+"%",SOL+p+wn+12,y,
+          {boy:20,kalin:700,renk:fark>=0?K.yesil:K.pas});
+      // birim sayının hemen sağında: kutudan taşmaz, sütun hizası bozulmaz
+      [[s.adetA,kolA],[s.adetB,kolB]].forEach(([adet,kol])=>{
+        c.font=`400 18px 'Archivo',sans-serif`;
+        const wb=c.measureText(s.birim).width;
+        yaz(c,s.birim,kol,y,{boy:18,kalin:400,renk:K.soluk,hiza:"right"});
+        yaz(c,fmt(adet,s.ond),kol-wb-9,y,{boy:28,kalin:700,tek:true,hiza:"right"});
+      });
+      y+=satirH;
+    });
+  }
+
+  // dipnot
+  y=Y-K.KENAR-14-altPay;
+  cizgiCek(c,SOL,y-42,SAG,3);
+  yaz(c,"Enflasyona göre satın alma gücü karşılığı",SOL,y,{boy:21,kalin:400,renk:K.soluk});
+  yaz(c,"nakdi zamanında",SAG,y,{boy:21,kalin:700,renk:K.murekkep,hiza:"right"});
+  return c.canvas;
+}
+
+let sonKartUrl=null;
+async function kartPaylas(yuk,btn){
+  const durum=$("#kartDurum"), etiket=btn.textContent;
+  const hepsi=document.querySelectorAll(".kart-btn");
+  hepsi.forEach(b=>b.disabled=true); btn.textContent="Hazırlanıyor…";
+  const bildir=m=>{ durum.hidden=false; durum.innerHTML=m; };
+  try{
+    // Yazı tipleri yüklenmeden çizersek canvas varsayılan fontu kullanır
+    if(document.fonts&&document.fonts.load){
+      await Promise.all([
+        document.fonts.load('700 104px "Space Mono"'),
+        document.fonts.load('700 28px "Archivo"'),
+        document.fonts.load('500 27px "Archivo"')
+      ]);
+    }
+    const kanvas=kartCiz(yuk);
+    const blob=await new Promise(r=>kanvas.toBlob(r,"image/png"));
+    const oran=yuk===1920?"9x16":"4x5";
+    const ad=`nakdi-zamaninda-${yilA.value}-${yilB.value}-${oran}.png`;
+
+    // Kartı her koşulda sayfada göster: indirme engellense bile erişilebilir kalsın
+    if(sonKartUrl) URL.revokeObjectURL(sonKartUrl);
+    sonKartUrl=URL.createObjectURL(blob);
+    $("#kartGorsel").src=sonKartUrl;
+    $("#kartIndir").href=sonKartUrl;
+    $("#kartIndir").download=ad;
+    $("#kartIndir").textContent=`İndir · 1080×${yuk} PNG`;
+    $("#kartOnizleme").hidden=false;
+
+    // Paylaşım penceresi açılabiliyorsa en iyisi o
+    const dosya=new File([blob],ad,{type:"image/png"});
+    if(navigator.canShare&&navigator.canShare({files:[dosya]})){
+      try{
+        await navigator.share({files:[dosya]});
+        bildir("Kart paylaşıldı.");
+        return;
+      }catch(e){
+        if(e&&e.name==="AbortError"){ durum.hidden=true; return; }
+        // paylaşım engellendi: aşağıdaki yönergeye düş
+      }
+    }
+    bildir("Kart hazır. <b>Görsele uzun bas → Görseli Kaydet</b>, "+
+           "ya da İndir'e dokun. (Yalıtılmış çerçevede indirme engellenebilir; "+
+           "o durumda uzun basma yöntemi çalışır.)");
+  }catch(e){
+    bildir("Kart oluşturulamadı: "+((e&&e.message)||e));
+  }finally{
+    hepsi.forEach(b=>b.disabled=false); btn.textContent=etiket;
+  }
+}
+document.querySelectorAll(".kart-btn").forEach(b=>
+  b.addEventListener("click",()=>kartPaylas(+b.dataset.yuk,b)));
+
+/* ---------- VERİ YÜKLEME ---------- */
+function veriKur(d){
+  ({EA,OLAYLAR,ASGARI,USD,EUR,ALTIN}=d);
+  GUNCELLEME=d._guncelleme||"";
+  E={}; SONAY={};
+  for(const k of Object.keys(EA).sort()){ const [y,m]=k.split("-"); SONAY[y]=m; E[y]=EA[k]; }
+  SON=Object.keys(EA).sort().pop();
+  [SON_YIL,SON_AY]=SON.split("-").map(Number);
+  YILLAR=Object.keys(E).map(Number).sort((a,b)=>a-b);
+  KALEMLER=[
+  {ad:"Net asgari ücret", birim:"maaş", veri:ASGARI, ond:2, ek:"/ay"},
+  {ad:"Gram altın",       birim:"gram", veri:ALTIN,  ond:2},
+  {ad:"ABD doları",       birim:"$",    veri:USD,    ond:0},
+  {ad:"Euro",             birim:"€",    veri:EUR,    ond:0}
+];
+}
+
+function hataGoster(mesaj){
+  document.querySelector(".sayfa").insertAdjacentHTML("afterbegin",
+    `<div class="uyari" style="margin:0 0 16px"><b>Veri yüklenemedi.</b> ${mesaj}
+     Sayfayı yenilemeyi deneyin. Dosyayı bilgisayarınızda çift tıklayarak açtıysanız,
+     tarayıcı güvenlik kuralı gereği veri.json okunamaz; bir sunucu üzerinden açın.</div>`);
+}
+
+/* ---------- BAŞLAT ---------- */
+async function baslat(){
+  const p=urlOku();
+  const gec=(v,f)=>E[v]?+v:f;
+  const a=gec(p.get("a"),SON_YIL), b=gec(p.get("b"),2003);
+  [[yilA,a],[yilB,b]].forEach(([s,v])=>{
+    s.innerHTML=YILLAR.map(y=>
+      `<option value="${y}">${y}</option>`).join("");
+    s.value=v;
+  });
+  ayDoldur(ayA,a); ayDoldur(ayB,b);
+  ayA.value=(a===SON_YIL)?SON_AY:12; ayB.value=12;
+  yon=p.get("y")==="B"?"B":"A";
+  const t=parseFloat(p.get("t"));
+  (yon==="A"?tutarA:tutarB).value=fmt(isFinite(t)&&t>0?t:2000);
+  $("#cipler").innerHTML=CIPLER.map(([y,m,ad])=>
+    `<button class="cip" data-y="${y}" data-m="${m}" aria-pressed="false">${y}<small>${ad}</small></button>`).join("");
+  rozetCiz("r1"); rozetCiz("r2"); hesapla();
+}
+
+// Veri gelmeden arayüz kurulamaz
+(async ()=>{
+  try{
+    const y=await fetch("veri.json",{cache:"no-cache"});
+    if(!y.ok) throw new Error("HTTP "+y.status);
+    veriKur(await y.json());
+    await baslat();
+  }catch(e){ hataGoster((e&&e.message)||""); }
+})();
+</script>
+</body>
+</html>
