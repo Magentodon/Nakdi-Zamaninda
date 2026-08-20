@@ -71,7 +71,8 @@ body{
   .sayfa{background-color:var(--kagit);color:var(--murekkep)}
 }
 .ust{display:flex;justify-content:space-between;align-items:baseline;
-  padding-bottom:12px;border-bottom:1.5px solid var(--murekkep);margin-bottom:22px}
+  padding-bottom:12px;border-bottom:1.5px solid var(--murekkep);margin-bottom:0}
+.slogan{margin:9px 0 22px;font-size:12.5px;font-weight:500;letter-spacing:.02em;color:var(--murekkep-soluk)}
 .marka{font-size:15px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
 .seri{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--murekkep-soluk)}
 
@@ -113,7 +114,7 @@ input.tutar:focus{outline:none}
   white-space:nowrap;flex:0 0 auto}
 .rozet{position:absolute;right:-58px;bottom:-58px;width:190px;height:190px;opacity:.13;pointer-events:none;z-index:1}
 button.dolgu{
-  display:block;position:relative;z-index:2;margin-top:10px;
+  display:inline-block;position:relative;z-index:2;margin-top:10px;
   font-family:'Archivo';font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
   padding:4px 8px;background:transparent;border:1px solid var(--cizgi);
   color:var(--murekkep-soluk);cursor:pointer;transition:.15s;
@@ -121,6 +122,8 @@ button.dolgu{
 button.dolgu:hover{background:var(--murekkep);color:var(--kagit-acik);border-color:var(--murekkep)}
 button.dolgu:focus-visible{outline:2px solid var(--mor);outline-offset:2px}
 button.dolgu[hidden]{display:none}
+.dolgular{position:relative;z-index:2;margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+.dolgular:empty{display:none}
 .olay{position:relative;z-index:2;margin-top:12px;padding-left:11px;
   border-left:2px solid var(--mor);font-size:11.5px;line-height:1.5;color:var(--murekkep-soluk)}
 .olay[hidden]{display:none}
@@ -221,6 +224,7 @@ button.cip[aria-pressed="true"] small{opacity:1}
     <div class="marka">Nakdi Zamanında</div>
     <div class="seri" id="seriNot">TÜFE</div>
   </header>
+  <p class="slogan">Yıllar arası para çevirici</p>
 
   <div class="uyari" id="kismiNot" hidden style="margin:0 0 16px">
     <b>Ay seçimi 1994'ten itibaren.</b> TÜİK aylık endeksi 1994'te başlıyor;
@@ -234,7 +238,7 @@ button.cip[aria-pressed="true"] small{opacity:1}
       <input class="tutar" autocomplete="off" enterkeyhint="done" id="tutarA" inputmode="decimal" size="5" value="2.000" aria-label="Kaynak tutar">
       <span class="birim" id="birimA">TL</span>
     </div>
-    <button class="dolgu" id="dolguA" data-p="A" hidden>asgari ücret</button>
+    <div class="dolgular" id="dolgularA"></div>
     <p class="olay" id="olayA" hidden></p>
   </section>
 
@@ -247,7 +251,7 @@ button.cip[aria-pressed="true"] small{opacity:1}
       <input class="tutar" autocomplete="off" enterkeyhint="done" id="tutarB" inputmode="decimal" size="5" aria-label="Hedef tutar">
       <span class="birim" id="birimB">TL</span>
     </div>
-    <button class="dolgu" id="dolguB" data-p="B" hidden>asgari ücret</button>
+    <div class="dolgular" id="dolgularB"></div>
     <p class="olay" id="olayB" hidden></p>
     <div class="eski-kutu" id="eskiKutu" hidden>
       <div class="eski-ust">
@@ -295,7 +299,8 @@ button.cip[aria-pressed="true"] small{opacity:1}
     o kalemin enflasyonun önünde mi arkasında mı kaldığını gösterir.
     <div class="uyari">
       <b>Veri notu:</b> TÜFE <b>aylık</b> endekstir (TÜİK 1994=100 ve 2003=100 serileri, resmi yıllık oranla bağlanmıştır). Sepet kalemleri ise <b>yıl sonu</b> değeridir.
-      Asgari ücret 1996'dan, dolar 1980'den, euro 2001'den, altın 1980'den itibaren var.
+      Asgari ücret 1996'dan, dolar 1980'den, euro 2001'den, altın 1980'den,
+      simit 2013'ten itibaren var (İSTESOB İstanbul tarifesi).
       Altın 1980–2023 arası ons fiyatı ve kurdan türetilmiştir (piyasa değerleriyle ~%1 sapma).
       Seriler <code>veri.json</code> dosyasındadır; aylık güncelleme yalnız o dosyada yapılır.
     </div>
@@ -310,7 +315,7 @@ button.cip[aria-pressed="true"] small{opacity:1}
 <script>
 /* ---------- VERİ ----------
    Seriler veri.json'dan yüklenir. Aylık güncelleme için SADECE o dosya değişir. */
-let EA,OLAYLAR,ASGARI,USD,EUR,ALTIN;
+let EA,OLAYLAR,ASGARI,USD,EUR,ALTIN,SIMIT,DOLGULAR;
 let E,SONAY,SON,SON_YIL,SON_AY,YILLAR,KALEMLER,GUNCELLEME;
 
 // TÜFE endeksi, yıl sonu, 2003 = 100
@@ -498,11 +503,13 @@ function hesapla(){
     if(o) el.innerHTML=`<b>${tarihYazi(yl,ay)}</b> — ${o}`;
   });
 
-  // Asgari ücret butonları: veri olmayan yıllarda (1996 öncesi) gizlenir
-  [["A",yilA],["B",yilB]].forEach(([p,sel])=>{
-    const btn=document.getElementById("dolgu"+p), y=+sel.value, ucret=ASGARI[y];
-    btn.hidden = !ucret;
-    if(ucret) btn.title = `${y} yılı net asgari ücreti alana yazılır`;
+  // Dolgu butonları: yalnız o yıl verisi olan kalemler görünür
+  [["A",yilA],["B",yilB]].forEach(([P,sel])=>{
+    const y=+sel.value, kap=document.getElementById("dolgular"+P);
+    kap.innerHTML=DOLGULAR.filter(k=>k.seri&&k.seri[y]).map(k=>
+      `<button class="dolgu" data-p="${P}" data-ad="${k.ad}"
+        title="${y} yılında ${k.ad}: ${fiyatFmt(y<=2004?k.seri[y]*1e6:k.seri[y])} ${birimAdi(y)}">${k.ad}</button>`
+    ).join("");
   });
 
   document.querySelectorAll(".cip").forEach(c=>c.setAttribute("aria-pressed",
@@ -549,13 +556,13 @@ function urlOku(){
 [yilA,yilB,ayA,ayB].forEach(el=>el.addEventListener("change",hesapla));
 
 // Butona basınca o panelin yılına ait net asgari ücreti alana yaz ve o yönden hesapla
-[["A",tutarA,yilA],["B",tutarB,yilB]].forEach(([p,inp,sel])=>{
-  document.getElementById("dolgu"+p).addEventListener("click",()=>{
-    const ucret=ASGARI[+sel.value];
-    if(!ucret) return;
-    inp.value=fmt(ucret);
-    yon=p;
-    hesapla();
+[["A",tutarA,yilA],["B",tutarB,yilB]].forEach(([P,inp,sel])=>{
+  document.getElementById("dolgular"+P).addEventListener("click",e=>{
+    const b=e.target.closest(".dolgu"); if(!b) return;
+    const kalem=DOLGULAR.find(k=>k.ad===b.dataset.ad);
+    const deger=kalem&&kalem.seri[+sel.value];
+    if(!deger) return;
+    inp.value=fmt(deger); boyutla(inp); yon=P; hesapla();
   });
 });
 eskiSvic.addEventListener("change",hesapla);
@@ -782,7 +789,8 @@ document.querySelectorAll(".kart-btn").forEach(b=>
 
 /* ---------- VERİ YÜKLEME ---------- */
 function veriKur(d){
-  ({EA,OLAYLAR,ASGARI,USD,EUR,ALTIN}=d);
+  ({EA,OLAYLAR,ASGARI,USD,EUR,ALTIN,SIMIT}=d);
+  DOLGULAR=[{ad:"asgari ücret",seri:ASGARI}];
   GUNCELLEME=d._guncelleme||"";
   E={}; SONAY={};
   for(const k of Object.keys(EA).sort()){ const [y,m]=k.split("-"); SONAY[y]=m; E[y]=EA[k]; }
@@ -793,7 +801,8 @@ function veriKur(d){
   {ad:"Net asgari ücret", birim:"maaş", veri:ASGARI, ond:2, ek:"/ay"},
   {ad:"Gram altın",       birim:"gram", veri:ALTIN,  ond:2},
   {ad:"ABD doları",       birim:"$",    veri:USD,    ond:0},
-  {ad:"Euro",             birim:"€",    veri:EUR,    ond:0}
+  {ad:"Euro",             birim:"€",    veri:EUR,    ond:0},
+  {ad:"Simit",            birim:"adet", veri:SIMIT,  ond:0}
 ];
 }
 
